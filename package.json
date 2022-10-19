@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "npx tsc && node index.js",
-    "jasmine": "jasmine"
+    "start": "npx tsc && node dist/index.js",
+    "jasmine": "npx tsc && jasmine"
   },
   "author": "",
   "license": "ISC",
