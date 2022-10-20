@@ -1,22 +1,28 @@
-import { NextFunction } from 'express'
 import sharp from 'sharp'
-
-import express from 'express'
+import fs from 'fs'
 import { Router } from 'express'
 
 const routes = Router()
 
 /* GET home page. */
-routes.get('/api', async function (req: any, res: any, next: NextFunction) {
+routes.get('/api', async function (req: any, res: any) {
     const filepath = '/home/drich/assets/full/' + req.query.id
 
-    const thumbFile = await resizeImage(
-        req.query.id,
-        filepath,
-        parseInt(req.query.width),
-        parseInt(req.query.height)
-    )
-    res.sendFile(thumbFile)
+    if (fs.existsSync(filepath)) {
+        if (!fs.existsSync(filepath)) {
+            const thumbFile = await resizeImage(
+                req.query.id,
+                filepath,
+                parseInt(req.query.width),
+                parseInt(req.query.height)
+            )
+            res.sendFile(thumbFile)
+        } else {
+            res.sendFile('/home/drich/assets/thumb/' + req.query.id)
+        }
+    } else {
+        res.send('oopsies... desired image not found')
+    }
 })
 
 const resizeImage = async (
