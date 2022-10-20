@@ -13,6 +13,9 @@ const myFunc = (num) => {
 };
 exports.myFunc = myFunc;
 app.get('/api', api_1.default);
+// app.get('/image', function (req, res) {
+//     res.sendFile(filepath)
+// })
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
