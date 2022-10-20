@@ -10,10 +10,6 @@ export const myFunc = (num: number): number => {
 
 app.get('/api', routes)
 
-// app.get('/image', function (req, res) {
-//     res.sendFile(filepath)
-// })
-
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server')
 })
