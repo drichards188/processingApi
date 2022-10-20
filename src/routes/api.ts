@@ -10,7 +10,6 @@ routes.get('/api', async function (req: any, res: any) {
 
     if (fs.existsSync(filepath)) {
         if (!fs.existsSync(filepath)) {
-            //todo add error handling
             const thumbFile = await resizeImage(
                 req.query.id,
                 filepath,
