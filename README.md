@@ -15,3 +15,7 @@ run project using npm start
 in url use params id for the image name. width and height to resize.
 
 such as http://localhost:3000/?id=encenadaport.jpg&height=100&width=200
+
+## testing
+
+npm jasmine runs testing suite
