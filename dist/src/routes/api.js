@@ -12,26 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.resizeImage = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 const fs_1 = __importDefault(require("fs"));
 const express_1 = require("express");
+const filehead = '/home/drich/assets/';
 const routes = (0, express_1.Router)();
-/* GET home page. */
-routes.get('/api', function (req, res, next) {
+routes.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const filepath = '/home/drich/assets/full/' + req.query.id;
+        let id = '';
+        if (typeof req.query.id === 'string') {
+            id = req.query.id;
+        }
+        const width = parseInt(req.query.width);
+        const height = parseInt(req.query.height);
+        const filepath = filehead + 'full/' + id;
         if (fs_1.default.existsSync(filepath)) {
             if (!fs_1.default.existsSync(filepath)) {
-                //todo add error handling
-                const thumbFile = yield resizeImage(req.query.id, filepath, parseInt(req.query.width), parseInt(req.query.height));
+                const thumbFile = yield (0, exports.resizeImage)(id, filepath, width, height);
                 res.sendFile(thumbFile);
             }
             else {
-                res.sendFile('/home/drich/assets/thumb/' + req.query.id);
+                res.sendFile(filehead + '/thumb/' + req.query.id);
             }
         }
         else {
-            res.send('desired image not found');
+            res.send('oopsies... desired image not found');
         }
     });
 });
@@ -39,11 +45,12 @@ const resizeImage = (id, filepath, width, height) => __awaiter(void 0, void 0, v
     try {
         yield (0, sharp_1.default)(filepath)
             .resize({ width: width, height: height })
-            .toFile('/home/drich/assets/thumb/' + id);
+            .toFile(filehead + id);
     }
     catch (error) {
         console.log(error);
     }
-    return '/home/drich/assets/thumb/' + id;
+    return filehead + id;
 });
+exports.resizeImage = resizeImage;
 exports.default = routes;

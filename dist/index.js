@@ -12,10 +12,7 @@ const myFunc = (num) => {
     return num * num;
 };
 exports.myFunc = myFunc;
-app.get('/api', api_1.default);
-app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server');
-});
+app.get('/', api_1.default);
 app.listen(port, () => {
     console.log(`Server is running at https://localhost:${port}`);
 });
