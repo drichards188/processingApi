@@ -7,7 +7,7 @@ const routes = Router()
 
 /* GET home page. */
 routes.get('/api', function (req: any, res: any, next: NextFunction) {
-    res.send('hiya david this is /api')
+    res.send(`hiya david this is /api with params of: ${req.query.id}`)
     // res.render('index', { title: 'Hiya David this is /api' })
 })
 
