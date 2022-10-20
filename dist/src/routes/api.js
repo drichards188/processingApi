@@ -19,17 +19,14 @@ const routes = (0, express_1.Router)();
 routes.get('/api', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const filepath = '/home/drich/assets/full/' + req.query.id;
-        const thumbFile = yield resizeImage(req.query.id, filepath, 100, 200);
-        console.log(thumbFile);
+        const thumbFile = yield resizeImage(req.query.id, filepath, parseInt(req.query.width), parseInt(req.query.height));
         res.sendFile(thumbFile);
-        // res.send(`hiya david this is /api with params of: ${req.query.id}`)
-        // res.render('index', { title: 'Hiya David this is /api' })
     });
 });
 const resizeImage = (id, filepath, width, height) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, sharp_1.default)(filepath)
-            .resize({ width: 100 })
+            .resize({ width: width, height: height })
             .toFile('/home/drich/assets/thumb/' + id);
     }
     catch (error) {
@@ -38,4 +35,3 @@ const resizeImage = (id, filepath, width, height) => __awaiter(void 0, void 0, v
     return '/home/drich/assets/thumb/' + id;
 });
 exports.default = routes;
-// module.exports = router

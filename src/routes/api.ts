@@ -10,11 +10,13 @@ const routes = Router()
 routes.get('/api', async function (req: any, res: any, next: NextFunction) {
     const filepath = '/home/drich/assets/full/' + req.query.id
 
-    const thumbFile = await resizeImage(req.query.id, filepath, 100, 200)
-    console.log(thumbFile)
+    const thumbFile = await resizeImage(
+        req.query.id,
+        filepath,
+        parseInt(req.query.width),
+        parseInt(req.query.height)
+    )
     res.sendFile(thumbFile)
-    // res.send(`hiya david this is /api with params of: ${req.query.id}`)
-    // res.render('index', { title: 'Hiya David this is /api' })
 })
 
 const resizeImage = async (
@@ -25,7 +27,7 @@ const resizeImage = async (
 ) => {
     try {
         await sharp(filepath)
-            .resize({ width: 100 })
+            .resize({ width: width, height: height })
             .toFile('/home/drich/assets/thumb/' + id)
     } catch (error) {
         console.log(error)
