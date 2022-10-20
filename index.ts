@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
 import routes from './src/routes/api'
 
 const app: Express = express()
@@ -8,11 +8,7 @@ export const myFunc = (num: number): number => {
     return num * num
 }
 
-app.get('/api', routes)
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server')
-})
+app.get('/', routes)
 
 app.listen(port, () => {
     console.log(`Server is running at https://localhost:${port}`)
