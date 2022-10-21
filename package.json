@@ -9,7 +9,7 @@
     "start": "npx tsc && node dist/index.js",
     "lint": "eslint '**/*.ts'",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "jasmine": "eslint 'index.ts' && prettier --config .prettierrc '*.ts' --write && npx tsc && jasmine"
+    "jasmine": "eslint '**/*.ts' && prettier --config .prettierrc '*.ts' --write && npx tsc && jasmine"
   },
   "author": "",
   "license": "ISC",
