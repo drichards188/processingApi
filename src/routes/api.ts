@@ -7,7 +7,7 @@ const filehead = '/home/drich/assets/'
 
 const routes = Router()
 
-routes.get('/', async function (req: Request, res: Response) {
+routes.get('/api', async function (req: Request, res: Response) {
     let id = ''
     if (typeof req.query.id === 'string') {
         id = req.query.id

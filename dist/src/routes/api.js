@@ -16,9 +16,10 @@ exports.resizeImage = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 const fs_1 = __importDefault(require("fs"));
 const express_1 = require("express");
+//add file path head here to filehead
 const filehead = '/home/drich/assets/';
 const routes = (0, express_1.Router)();
-routes.get('/', function (req, res) {
+routes.get('/api', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let id = '';
         if (typeof req.query.id === 'string') {
