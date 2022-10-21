@@ -1,9 +1,9 @@
 import sharp from 'sharp'
 import fs from 'fs'
 import { Request, Response, Router } from 'express'
+import path from 'path'
 
-//add file path head here to filehead
-const filehead = '/home/drich/assets/'
+const filehead = process.cwd() + '/assets'
 
 const routes = Router()
 
@@ -17,11 +17,13 @@ routes.get('/api', async function (req: Request, res: Response) {
 
     const height: number = parseInt(<string>req.query.height)
 
-    const filepath = filehead + 'full/' + id
+    const filepath = filehead + '/full/' + id
 
     if (fs.existsSync(filepath)) {
-        if (!fs.existsSync(filepath)) {
+        const thumbFilePath = path.join(filehead, '/thumb/', id)
+        if (!fs.existsSync(thumbFilePath)) {
             const thumbFile = await resizeImage(id, filepath, width, height)
+
             res.sendFile(thumbFile)
         } else {
             res.sendFile(filehead + '/thumb/' + req.query.id)
@@ -38,14 +40,15 @@ export const resizeImage = async (
     height: number
 ) => {
     try {
+        const theFilePath = path.join(filehead, `/thumb/${id}`)
         await sharp(filepath)
             .resize({ width: width, height: height })
-            .toFile(filehead + id)
+            .toFile(theFilePath)
     } catch (error) {
         console.log(error)
     }
 
-    return filehead + id
+    return path.join(filehead, '/thumb', id)
 }
 
 export default routes
