@@ -20,18 +20,30 @@ routes.get('/api', async function (req: Request, res: Response) {
     const filepath = filehead + '/full/' + id
 
     if (fs.existsSync(filepath)) {
+        id = processFileExtension(id, width, height)
         const thumbFilePath = path.join(filehead, '/thumb/', id)
         if (!fs.existsSync(thumbFilePath)) {
             const thumbFile = await resizeImage(id, filepath, width, height)
 
             res.sendFile(thumbFile)
         } else {
-            res.sendFile(filehead + '/thumb/' + req.query.id)
+            res.sendFile(filehead + '/thumb/' + id)
         }
     } else {
         res.send('oopsies... desired image not found')
     }
 })
+
+export const processFileExtension = (
+    fileId: string,
+    width: number,
+    height: number
+) => {
+    const fileExtension = fileId.match(/\.\S+/g)
+    fileId = fileId.split('.')[0]
+    fileId = fileId + width.toString() + height.toString() + fileExtension
+    return fileId
+}
 
 export const resizeImage = async (
     id: string,
