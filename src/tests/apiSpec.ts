@@ -1,4 +1,13 @@
 import { resizeImage } from '../routes/api'
+import supertest from 'supertest'
+import { app } from '../index'
+
+const request = supertest(app)
+it('gets the api endpoint', async (done) => {
+    const response = await request.get('/api')
+    expect(response.status).toBe(200)
+    done()
+})
 
 it('should resize image and save to thumb', () => {
     resizeImage(
