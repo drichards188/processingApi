@@ -29,7 +29,7 @@ routes.get('/api', async function (req: Request, res: Response) {
         return
     }
 
-    let width: number = 0
+    let width = 0
     try {
         width = parseInt(<string>req.query.width)
     } catch (e) {
@@ -37,7 +37,7 @@ routes.get('/api', async function (req: Request, res: Response) {
         return
     }
 
-    let height: number = 0
+    let height = 0
     try {
         height = parseInt(<string>req.query.height)
     } catch (e) {
