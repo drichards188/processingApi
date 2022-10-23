@@ -16,8 +16,8 @@ exports.resizeImage = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 const fs_1 = __importDefault(require("fs"));
 const express_1 = require("express");
-//add file path head here to filehead
-const filehead = '/home/drich/assets/';
+const path_1 = __importDefault(require("path"));
+const filehead = process.cwd() + '/assets';
 const routes = (0, express_1.Router)();
 routes.get('/api', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,9 +27,10 @@ routes.get('/api', function (req, res) {
         }
         const width = parseInt(req.query.width);
         const height = parseInt(req.query.height);
-        const filepath = filehead + 'full/' + id;
+        const filepath = filehead + '/full/' + id;
         if (fs_1.default.existsSync(filepath)) {
-            if (!fs_1.default.existsSync(filepath)) {
+            const thumbFilePath = path_1.default.join(filehead, '/thumb/', id);
+            if (!fs_1.default.existsSync(thumbFilePath)) {
                 const thumbFile = yield (0, exports.resizeImage)(id, filepath, width, height);
                 res.sendFile(thumbFile);
             }
@@ -44,14 +45,15 @@ routes.get('/api', function (req, res) {
 });
 const resizeImage = (id, filepath, width, height) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const theFilePath = path_1.default.join(filehead, `/thumb/${id}`);
         yield (0, sharp_1.default)(filepath)
             .resize({ width: width, height: height })
-            .toFile(filehead + id);
+            .toFile(theFilePath);
     }
     catch (error) {
         console.log(error);
     }
-    return filehead + id;
+    return path_1.default.join(filehead, '/thumb', id);
 });
 exports.resizeImage = resizeImage;
 exports.default = routes;
