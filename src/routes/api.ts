@@ -9,13 +9,41 @@ const routes = Router()
 
 routes.get('/api', async function (req: Request, res: Response) {
     let id = ''
+
     if (typeof req.query.id === 'string') {
         id = req.query.id
+    } else {
+        res.send('oopsies... please enter a valid string for id')
     }
 
-    const width: number = parseInt(<string>req.query.width)
+    if (typeof req.query.width !== 'string' || isNaN(Number(req.query.width))) {
+        res.send('oopsies... please enter a valid number for width')
+        return
+    }
 
-    const height: number = parseInt(<string>req.query.height)
+    if (
+        typeof req.query.height !== 'string' ||
+        isNaN(Number(req.query.height))
+    ) {
+        res.send('oopsies... please enter a valid number for height')
+        return
+    }
+
+    let width: number = 0
+    try {
+        width = parseInt(<string>req.query.width)
+    } catch (e) {
+        res.send('oopsies... please enter a valid number for width')
+        return
+    }
+
+    let height: number = 0
+    try {
+        height = parseInt(<string>req.query.height)
+    } catch (e) {
+        res.send('oopsies... please enter a valid number for height')
+        return
+    }
 
     const filepath = filehead + '/full/' + id
 
