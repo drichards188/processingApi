@@ -3,7 +3,7 @@ import supertest from 'supertest'
 import { app } from '../index'
 
 const request = supertest(app)
-it('gets the api endpoint', async (done) => {
+it('should get the api & receive 200', async (done) => {
     const response = await request.get('/api')
     expect(response.status).toBe(200)
     done()
