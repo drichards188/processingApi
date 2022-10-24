@@ -3,10 +3,13 @@ import supertest from 'supertest'
 import { app } from '../index'
 
 const request = supertest(app)
-it('should get the api & receive 200', async (done) => {
-    const response = await request.get('/api')
-    expect(response.status).toBe(200)
-    done()
+describe('Test endpoint responses', () => {
+    it('gets the api endpoint', async () => {
+        const response = await request.get(
+            '/api?id=icelandwaterfall.jpg&height=100&width=200'
+        )
+        expect(response.status).toBe(200)
+    })
 })
 
 it('should resize image and save to thumb', () => {
